@@ -1,20 +1,77 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
 
-export default function App() {
+// Native navigation
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// Nativebase components
+import { NativeBaseProvider, extendTheme, Box } from "native-base";
+
+// Screeans
+import { Home, Signin, Signup, ForgetPassword } from "./src/Screens";
+import { Products } from "./src/Screens";
+
+// Dev components
+import { BottomNav } from "./src/Layouts";
+
+// Constants
+import { Colors } from "./src/Theme";
+
+const Stack = createNativeStackNavigator();
+
+export default () => {
+  const theme = extendTheme({ colors: Colors });
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NativeBaseProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: theme.colors.primary["900"],
+            },
+            headerTintColor: theme.colors.primary["50"],
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        >
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Signin"
+            component={Signin}
+            options={{
+              title: "Sign In",
+            }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{
+              title: "Sign Up",
+            }}
+          />
+          <Stack.Screen
+            name="ForgetPassword"
+            component={ForgetPassword}
+            options={{
+              title: "Forget Password",
+            }}
+          />
+          <Stack.Screen
+            name="Products"
+            component={Products}
+            options={{
+              title: "All Products",
+            }}
+          />
+        </Stack.Navigator>
+        <BottomNav />
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
