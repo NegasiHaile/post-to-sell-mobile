@@ -1,5 +1,9 @@
 import React from "react";
 
+// Redux
+import { Provider } from "react-redux";
+import store from "./src/Redux/store";
+
 // Native navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -23,55 +27,57 @@ export default () => {
   const theme = extendTheme({ colors: Colors });
 
   return (
-    <NativeBaseProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: theme.colors.primary["900"],
-            },
-            headerTintColor: theme.colors.primary["50"],
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
-        >
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Signin"
-            component={Signin}
-            options={{
-              title: "Sign In",
+    <Provider store={store}>
+      <NativeBaseProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: theme.colors.primary["900"],
+              },
+              headerTintColor: theme.colors.primary["50"],
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
             }}
-          />
-          <Stack.Screen
-            name="Signup"
-            component={Signup}
-            options={{
-              title: "Sign Up",
-            }}
-          />
-          <Stack.Screen
-            name="ForgetPassword"
-            component={ForgetPassword}
-            options={{
-              title: "Forget Password",
-            }}
-          />
-          <Stack.Screen
-            name="Products"
-            component={Products}
-            options={{
-              title: "All Products",
-            }}
-          />
-        </Stack.Navigator>
-        <BottomNav />
-      </NavigationContainer>
-    </NativeBaseProvider>
+          >
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Signin"
+              component={Signin}
+              options={{
+                title: "Sign In",
+              }}
+            />
+            <Stack.Screen
+              name="Signup"
+              component={Signup}
+              options={{
+                title: "Sign Up",
+              }}
+            />
+            <Stack.Screen
+              name="ForgetPassword"
+              component={ForgetPassword}
+              options={{
+                title: "Forget Password",
+              }}
+            />
+            <Stack.Screen
+              name="Products"
+              component={Products}
+              options={{
+                title: "All Products",
+              }}
+            />
+          </Stack.Navigator>
+          <BottomNav />
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </Provider>
   );
 };
