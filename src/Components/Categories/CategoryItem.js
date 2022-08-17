@@ -1,10 +1,10 @@
 import React from "react";
 
 // Native-base components
-import { Box, Button, Image, Text } from "native-base";
+import { Box, Button, Icon, Image, Text } from "native-base";
 
 // Icons
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 
 const CategoryItem = ({ category }) => {
   return (
@@ -41,8 +41,13 @@ const CategoryItem = ({ category }) => {
           })}
         </Box>
 
-        <Button size="sm" m={1} variant="outline">
-          Show all
+        <Button
+          size="sm"
+          m={1}
+          variant="outline"
+          rightIcon={<Icon as={MaterialIcons} name="arrow-forward" />}
+        >
+          Show products
         </Button>
       </Box>
     </Box>
