@@ -9,6 +9,7 @@ const ContentContainer = ({ children }) => {
       _contentContainerStyle={{
         minHeight: "100%",
       }}
+      showsVerticalScrollIndicator={false}
     >
       <Box px={3} bg="white" size="full" alignItems="center">
         {children}
