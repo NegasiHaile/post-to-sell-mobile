@@ -2,9 +2,10 @@ import React from "react";
 
 // Dev components
 import { TopNav } from "../Layouts";
-import { ContentContainer } from "../Components/Containers";
 import { BannerSlide } from "../Components/Banner";
 import { FeaturedProducts } from "../Components/FeaturedProducts";
+
+import { CategoriesList } from "../Components/Categories";
 
 // Nativebase components
 import { Box, Button, HStack, Icon, ScrollView, Text } from "native-base";
@@ -21,6 +22,7 @@ const Home = ({ navigation }) => {
         contentContainerStyle={{
           minHeight: "60%",
         }}
+        showsVerticalScrollIndicator={false}
       >
         <Box px={3} py={5} bg="white" size="full" alignItems="center">
           <Box w="90%">
@@ -41,19 +43,13 @@ const Home = ({ navigation }) => {
               <FeaturedProducts />
             </Box>
 
-            <Box>
+            <Box pb={10}>
               <HStack justifyContent="space-between" alignItems="center">
                 <Text fontSize="2xl" color="coolGray.500">
                   Categories
                 </Text>
-                <Button
-                  variant="outline"
-                  leftIcon={<Icon as={MaterialIcons} name="list" />}
-                  onPress={() => navigation.navigate("Products")}
-                >
-                  all categories
-                </Button>
               </HStack>
+              <CategoriesList />
             </Box>
           </Box>
         </Box>
