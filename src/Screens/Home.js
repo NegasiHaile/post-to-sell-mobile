@@ -48,6 +48,14 @@ const Home = ({ navigation }) => {
                 <Text fontSize="2xl" color="coolGray.500">
                   Categories
                 </Text>
+
+                <Button
+                  variant="outline"
+                  leftIcon={<Icon as={MaterialIcons} name="list" />}
+                  onPress={() => navigation.navigate("Products")}
+                >
+                  All products
+                </Button>
               </HStack>
               <CategoriesList />
             </Box>
