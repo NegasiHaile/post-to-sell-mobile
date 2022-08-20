@@ -1,3 +1,4 @@
 import { userActionTypes } from "./User";
+import { categoryActionTypes } from "./Categories";
 
-export { userActionTypes };
+export { userActionTypes, categoryActionTypes };

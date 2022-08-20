@@ -1,3 +1,4 @@
 import { setProfile } from "./User";
+import { _setCategories } from "./Category";
 
-export { setProfile };
+export { setProfile, _setCategories };

@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import { categories } from "../../Mock";
+import { _setCategories } from "../../Redux/Actions";
+
+// APIs
+import { api_getAllCategories } from "../../api";
 
 // Dev components
 import CategoryItem from "./CategoryItem";
@@ -9,6 +13,19 @@ import CategoryItem from "./CategoryItem";
 import { Box, ScrollView } from "native-base";
 
 const CategoriesList = () => {
+  const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const findCategories = async () => {
+      const res = await api_getAllCategories();
+      setCategories(res.data);
+      dispatch(_setCategories(res.data));
+    };
+
+    findCategories();
+  }, []);
+
   return (
     <Box pt={5}>
       <ScrollView
@@ -16,9 +33,10 @@ const CategoriesList = () => {
         showsHorizontalScrollIndicator={false}
         autoScroll
       >
-        {categories.map((category, index) => {
-          return <CategoryItem category={category} key={index} />;
-        })}
+        {categories.length > 0 &&
+          categories.map((category, index) => {
+            return <CategoryItem category={category} key={index} />;
+          })}
       </ScrollView>
     </Box>
   );

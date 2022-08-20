@@ -1,5 +1,7 @@
 import React from "react";
 
+// Server configuration
+import { server } from "../../Constants/server";
 // Native-base components
 import { Box, Button, Icon, Image, Text } from "native-base";
 
@@ -12,7 +14,7 @@ const CategoryItem = ({ category }) => {
       <Image
         w="100%"
         h="140"
-        source={category.categoryImage}
+        source={{ uri: `${server}/${category.categoryImage}` }}
         alt="Category image"
         resizeMode="cover"
         roundedTop={5}
