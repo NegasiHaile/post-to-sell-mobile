@@ -21,10 +21,10 @@ const ProductPreview = ({ product }) => {
       />
       <HStack justifyContent="space-between" pt={1}>
         <Text fontSize="xs" color="trueGray.500">
-          {product.productName}
+          {product.productName ? product.productName : "Unnamed"}
         </Text>
         <Text fontSize="xs" bold color="trueGray.500">
-          {product.currentPrice} ETB
+          {product.currentPrice ? `${product.currentPrice} ETB` : "$ Call me"}
         </Text>
       </HStack>
     </Pressable>
