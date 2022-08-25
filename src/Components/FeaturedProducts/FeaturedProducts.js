@@ -1,27 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 // Dev components
 import { ProductPreview } from "../Product";
 
 // Nativebase Components
-import { HStack, Icon, VStack } from "native-base";
+import { Center, Flex, Spinner, Text } from "native-base";
 
+// APIs
+import { api_getAllFeaturedProducts } from "../../api";
 const FeaturedProducts = () => {
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+
+  useEffect(() => {
+    const getAllProducts = async () => {
+      setLoadingProducts((prev) => !prev);
+      const res = await api_getAllFeaturedProducts();
+      setFeaturedProducts(res.data);
+      setLoadingProducts((prev) => !prev);
+      console.warn(res.data);
+    };
+    getAllProducts();
+  }, []);
   return (
-    <VStack space={5} mt={5} mb={10}>
-      <HStack justifyContent="space-between" space={5}>
-        <ProductPreview />
-        <ProductPreview />
-      </HStack>
-      <HStack justifyContent="space-between">
-        <ProductPreview />
-        <ProductPreview />
-      </HStack>
-      <HStack justifyContent="space-between">
-        <ProductPreview />
-        <ProductPreview />
-      </HStack>
-    </VStack>
+    <Flex
+      mt={5}
+      mb={10}
+      flexWrap={"wrap"}
+      direction="row"
+      justifyContent="space-between"
+      minH="200px"
+    >
+      {!loadingProducts ? (
+        featuredProducts.length > 0 ? (
+          featuredProducts.map((product, index) => {
+            return <ProductPreview key={index} product={product} />;
+          })
+        ) : (
+          <Text textAlign="center"> Featured products not available!</Text>
+        )
+      ) : (
+        <Center w="100%">
+          <Spinner size="lg" />
+        </Center>
+      )}
+    </Flex>
   );
 };
 
