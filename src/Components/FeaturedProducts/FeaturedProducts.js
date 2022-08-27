@@ -18,7 +18,6 @@ const FeaturedProducts = () => {
       const res = await api_getAllFeaturedProducts();
       setFeaturedProducts(res.data);
       setLoadingProducts((prev) => !prev);
-      console.warn(res.data);
     };
     getAllProducts();
   }, []);
