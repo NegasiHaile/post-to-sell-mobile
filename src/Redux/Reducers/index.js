@@ -7,7 +7,7 @@ import { productReducer } from "./Product";
 const reducers = combineReducers({
   profile: userReducer,
   categories: categoryReducer,
-  allProducts: productReducer,
+  allActiveProducts: productReducer,
 });
 
 export default reducers;
