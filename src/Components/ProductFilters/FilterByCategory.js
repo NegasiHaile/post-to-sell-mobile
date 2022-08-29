@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { _setFilteredProducts } from "../../Redux/Actions";
 
 // Services
-import { CountProductsByCategory } from "../Services";
+import { CountProductsByCategory, FilterProductsByCategory } from "../Services";
 
 // Native-base components
 import { Box, Checkbox, Text } from "native-base";
@@ -22,10 +22,11 @@ const FilterByCategory = () => {
     setSelectedCategory(categoryId);
 
     if (categoryId !== "all") {
-      const productsByCategory = allActiveProducts?.filter(
-        (product) => product.category === categoryId
+      const filteredProductsByCategory = FilterProductsByCategory(
+        allActiveProducts,
+        categoryId
       );
-      dispatch(_setFilteredProducts(productsByCategory));
+      dispatch(_setFilteredProducts(filteredProductsByCategory));
     } else {
       dispatch(_setFilteredProducts(allActiveProducts));
     }
@@ -66,10 +67,10 @@ const FilterByCategory = () => {
                 isChecked={selectedCategory === category._id}
                 onChange={() => onSelectCategory(category._id)}
               >
-                {`${category.category} (${CountProductsByCategory(
-                  allActiveProducts,
-                  category._id
-                )})`}
+                {`${category.category} (${
+                  FilterProductsByCategory(allActiveProducts, category._id)
+                    .length
+                })`}
               </Checkbox>
             );
           })
