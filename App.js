@@ -13,8 +13,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider, extendTheme, Box } from "native-base";
 
 // Screeans
-import { Home, Signin, Signup, ForgetPassword } from "./src/Screens";
-import { Products } from "./src/Screens";
+import {
+  Home,
+  Signin,
+  Signup,
+  ForgetPassword,
+  Products,
+  ProductDetail,
+} from "./src/Screens";
 
 // Dev components
 import { BottomNav } from "./src/Layouts";
@@ -77,6 +83,13 @@ export default () => {
                 component={Products}
                 options={{
                   title: "All Products",
+                }}
+              />
+              <Stack.Screen
+                name="ProductDetail"
+                component={ProductDetail}
+                options={{
+                  title: "Product Detail",
                 }}
               />
             </Stack.Navigator>

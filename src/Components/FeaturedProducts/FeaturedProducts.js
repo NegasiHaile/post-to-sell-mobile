@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 // Dev components
 import { ProductPreview } from "../Product";
+import { ProductDetail } from "../Product";
 
 // Nativebase Components
 import { Center, Flex, Spinner, Text } from "native-base";
