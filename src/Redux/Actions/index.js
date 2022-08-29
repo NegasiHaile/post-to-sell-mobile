@@ -1,5 +1,10 @@
 import { setProfile } from "./User";
 import { _setCategories } from "./Category";
-import { _setAllActiveProducts } from "./Product";
+import { _setAllActiveProducts, _setFilteredProducts } from "./Product";
 
-export { setProfile, _setCategories, _setAllActiveProducts };
+export {
+  setProfile,
+  _setCategories,
+  _setAllActiveProducts,
+  _setFilteredProducts,
+};
