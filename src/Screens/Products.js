@@ -13,7 +13,6 @@ const Products = () => {
   const filteredProducts = useSelector((state) => state.filteredProducts);
   // const [loadingProducts, setLoadingProducts] = useState(false);
 
-  console.warn(filteredProducts);
   return (
     <>
       <ProductsFilter />
