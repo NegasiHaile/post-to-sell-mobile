@@ -43,7 +43,7 @@ const Home = ({ navigation }) => {
               <FeaturedProducts />
             </Box>
 
-            <Box pb={10}>
+            <Box pb={10} mt={10}>
               <HStack justifyContent="space-between" alignItems="center">
                 <Text fontSize="2xl" color="coolGray.500">
                   Categories
