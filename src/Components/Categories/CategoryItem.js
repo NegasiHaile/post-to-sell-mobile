@@ -3,56 +3,45 @@ import React from "react";
 // Server configuration
 import { server } from "../../Constants/server";
 // Native-base components
-import { Box, Button, Icon, Image, Text } from "native-base";
+import { Box, Button, Icon, Image, Text, HStack } from "native-base";
 
 // Icons
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 
 const CategoryItem = ({ category }) => {
   return (
-    <Box h="340 " w="150px" bg="text.100" rounded={5} mr={5}>
+    <HStack h="120" w="100%" bg="text.100" rounded={5}>
       <Image
-        w="100%"
-        h="140"
+        w="40%"
+        h="120"
         source={{ uri: `${server}/${category.categoryImage}` }}
         alt="Category image"
         resizeMode="cover"
-        roundedTop={5}
+        roundedLeft={5}
       />
-      <Box p={1}>
-        <Text fontSize="lg" mb={1}>
+      <Box p={2} width={"60%"}>
+        <Text fontSize="xl" mb={1}>
           {category.category}
         </Text>
-        <Text fontSize="xs" mb={1} h="60">
-          {category.description}
+        <Text fontSize="xs" mb={1}>
+          {category.description}{" "}
+          {/* {category.subCategory.map((sub, index) => {
+            return sub.sub_name + ", ";
+          })} */}
         </Text>
-        <Box ml={1}>
-          {category.subCategory.map((sub, index) => {
-            return (
-              <Text
-                key={index}
-                fontSize="xs"
-                bold
-                color="muted.700"
-                alignItems="center"
-              >
-                <Entypo name="dot-single" size={12} />
-                {sub.sub_name}
-              </Text>
-            );
-          })}
-        </Box>
 
         <Button
-          size="sm"
+          size="xs"
+          p={1}
           m={1}
-          variant="outline"
+          variant="ghost"
+          w="60%"
           rightIcon={<Icon as={MaterialIcons} name="arrow-forward" />}
         >
-          Show products
+          Show all products
         </Button>
       </Box>
-    </Box>
+    </HStack>
   );
 };
 
