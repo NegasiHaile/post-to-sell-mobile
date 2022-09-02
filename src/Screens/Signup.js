@@ -81,8 +81,8 @@ const Signup = ({ navigation }) => {
         console.warn(res.data);
         alert("Login succeed!");
         setIsLoading(false);
-        navigation.navigate("Home");
         dispatch(_setProfile(res.data));
+        navigation.navigate("Home");
       } catch (error) {
         setIsLoading(false);
       }
