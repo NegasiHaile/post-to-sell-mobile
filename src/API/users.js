@@ -2,6 +2,11 @@ import { server } from "../Constants/server";
 import validToken from "./validateToken";
 import axios from "axios";
 
+// Signup
+export const api_Signup = async (data) => {
+  return await axios.post(`${server}/api/users/signup`, { ...data });
+};
+
 // Refresh token
 export const apiRefreshToken = async (refreshToken) => {
   return await axios.post(`${server}/api/users/refresh_token`, {

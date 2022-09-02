@@ -17,6 +17,7 @@ import { api_getAllCategories } from "./categories.js"; // Categorie APIs
 import { api_getAllBanners } from "./banners"; // Banner APIs
 
 import {
+  api_Signup,
   api_getAllUsers,
   api_getUserProfile,
   api_editUserProfile,
@@ -58,6 +59,7 @@ export { api_getAllBanners };
 
 // users
 export {
+  api_Signup,
   api_getAllUsers,
   api_getUserProfile,
   api_editUserProfile,
