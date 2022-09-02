@@ -31,7 +31,6 @@ const ProductDetail = ({ route, navigation }) => {
   const product = route.params;
   const categories = useSelector((state) => state.categories);
 
-  console.warn(product);
   const onPressMobileNumberClick = (number) => {
     let phoneNumber = "";
     if (Platform.OS === "android") {
