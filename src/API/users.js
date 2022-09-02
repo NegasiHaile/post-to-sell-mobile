@@ -7,6 +7,11 @@ export const api_Signup = async (data) => {
   return await axios.post(`${server}/api/users/signup`, { ...data });
 };
 
+// Signin
+export const api_Signin = async (credentials) => {
+  return await axios.post(`${server}/api/users/signin`, { ...credentials });
+};
+
 // Refresh token
 export const apiRefreshToken = async (refreshToken) => {
   return await axios.post(`${server}/api/users/refresh_token`, {

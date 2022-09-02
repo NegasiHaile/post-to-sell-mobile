@@ -18,6 +18,7 @@ import { api_getAllBanners } from "./banners"; // Banner APIs
 
 import {
   api_Signup,
+  api_Signin,
   api_getAllUsers,
   api_getUserProfile,
   api_editUserProfile,
@@ -60,6 +61,7 @@ export { api_getAllBanners };
 // users
 export {
   api_Signup,
+  api_Signin,
   api_getAllUsers,
   api_getUserProfile,
   api_editUserProfile,
