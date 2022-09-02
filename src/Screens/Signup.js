@@ -1,4 +1,19 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+// APIs
+import { api_Signup } from "../api";
+
+// Redux Actions
+import { _setProfile } from "../Redux/Actions";
+
+// Utility functions
+import {
+  validName,
+  validEmail,
+  validPhoneNumber,
+  validPassword,
+} from "../Utils/Validation/InputValueValidations";
 
 // Dev components
 import { ContentContainer } from "../Components/Containers";
@@ -22,27 +37,56 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 // variables
 const initialSigninState = {
-  firstName: "",
-  lastName: "",
+  fName: "",
+  lName: "",
   email: "",
-  phoneNumber: "",
+  contacts: [],
+  phone: "",
   password: "",
   retypePassword: "",
 };
 
 const Signup = ({ navigation }) => {
+  const dispatch = useDispatch();
   // useStates
   const [showPassword, setShowPassword] = useState(false);
   const [signupCredentials, setSignupCredentials] =
     useState(initialSigninState);
   const [isLoading, setIsLoading] = useState(false);
+  const [inputErrors, setInputErrors] = useState({});
+
+  // Validating signup inputs
+  const validateInputs = () => {
+    const errors = {};
+    !validName(signupCredentials.fName) ? (errors.fName = false) : "";
+    !validEmail(signupCredentials.email) ? (errors.email = false) : "";
+    !validPhoneNumber(signupCredentials.phone) ? (errors.phone = false) : "";
+    !validPassword(signupCredentials.password) ? (errors.password = false) : "";
+    signupCredentials.password !== signupCredentials.retypePassword
+      ? (errors.retypePassword = false)
+      : "";
+    setInputErrors(errors);
+    return JSON.stringify(errors) === "{}";
+  };
 
   // On sumbmit -> login
-  const onSubmitSignup = () => {
-    try {
+  const onSubmitSignup = async () => {
+    setInputErrors({});
+    const validForm = validateInputs();
+
+    if (validForm) {
       setIsLoading(true);
-      alert("Login succeed!");
-    } catch (error) {}
+      try {
+        const res = await api_Signup(signupCredentials);
+        console.warn(res.data);
+        alert("Login succeed!");
+        setIsLoading(false);
+        navigation.navigate("Home");
+        dispatch(_setProfile(res.data));
+      } catch (error) {
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -73,36 +117,42 @@ const Signup = ({ navigation }) => {
         </Heading>
 
         <VStack space={2} mt="5">
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={"fName" in inputErrors}>
             <FormControl.Label>First Name</FormControl.Label>
             <Input
               type="text"
-              value={signupCredentials.firstName}
+              value={signupCredentials.fName}
               onChangeText={(text) =>
                 setSignupCredentials({
                   ...signupCredentials,
-                  firstName: text,
+                  fName: text,
                 })
               }
               placeholder="First name"
               size="lg"
+              required
             />
+            {"fName" in inputErrors && (
+              <FormControl.ErrorMessage mt={0}>
+                First name should contain at least 3 characters!
+              </FormControl.ErrorMessage>
+            )}
           </FormControl>
 
           <FormControl>
             <FormControl.Label>Last Name</FormControl.Label>
             <Input
               type="text"
-              value={signupCredentials.lastName}
+              value={signupCredentials.lName}
               onChangeText={(text) =>
-                setSignupCredentials({ ...signupCredentials, lastName: text })
+                setSignupCredentials({ ...signupCredentials, lName: text })
               }
               placeholder="Last name"
               size="lg"
             />
           </FormControl>
 
-          <FormControl isRequired isEmail>
+          <FormControl isRequired isInvalid={"email" in inputErrors}>
             <FormControl.Label>Email ID</FormControl.Label>
             <Input
               type="email"
@@ -113,25 +163,35 @@ const Signup = ({ navigation }) => {
               placeholder="User101@gmail.com"
               size="lg"
             />
+            {"email" in inputErrors && (
+              <FormControl.ErrorMessage mt={0}>
+                Please enter a valid email!
+              </FormControl.ErrorMessage>
+            )}
           </FormControl>
 
-          <FormControl>
+          <FormControl isRequired isInvalid={"phone" in inputErrors}>
             <FormControl.Label>Phone number</FormControl.Label>
             <Input
               type="number"
-              value={signupCredentials.phoneNumber}
+              value={signupCredentials.phone}
               onChangeText={(text) =>
                 setSignupCredentials({
                   ...signupCredentials,
-                  phoneNumber: text,
+                  phone: text,
                 })
               }
               placeholder="+251 ... ... ..."
               size="lg"
             />
+            {"email" in inputErrors && (
+              <FormControl.ErrorMessage mt={0}>
+                Please enter a valid phone number!
+              </FormControl.ErrorMessage>
+            )}
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={"password" in inputErrors}>
             <FormControl.Label>Password</FormControl.Label>
             <Input
               type={showPassword ? "text" : "password"}
@@ -155,9 +215,15 @@ const Signup = ({ navigation }) => {
                 />
               }
             />
+            {"password" in inputErrors && (
+              <FormControl.ErrorMessage mt={0}>
+                Password should be minimum of 8 characters long, with at least 1
+                symbol, 1 uppercase, and 1 lowercase letters and 1 number!
+              </FormControl.ErrorMessage>
+            )}
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={"retypePassword" in inputErrors}>
             <FormControl.Label>Retype Password</FormControl.Label>
             <Input
               type={showPassword ? "text" : "password"}
@@ -184,9 +250,15 @@ const Signup = ({ navigation }) => {
                 />
               }
             />
+            {"retypePassword" in inputErrors && (
+              <FormControl.ErrorMessage mt={0}>
+                Oops, Password not mutch!
+              </FormControl.ErrorMessage>
+            )}
           </FormControl>
 
           <Button
+            type="sumbmit"
             mt="2"
             colorScheme="primary"
             size="lg"
