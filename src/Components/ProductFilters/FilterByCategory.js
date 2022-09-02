@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { _setFilteredProducts } from "../../Redux/Actions";
 
 // Services
-import { CountProductsByCategory, FilterProductsByCategory } from "../Services";
+import { FilterProductsByCategory } from "../../Services";
 
 // Native-base components
 import { Box, Checkbox, Text } from "native-base";

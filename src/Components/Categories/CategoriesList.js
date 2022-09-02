@@ -7,7 +7,7 @@ import { _setCategories } from "../../Redux/Actions";
 import { api_getAllCategories } from "../../api";
 
 // Services
-import { FilterProductsByCategory } from "../Services";
+import { FilterProductsByCategory } from "../../Services";
 
 // Dev components
 import CategoryItem from "./CategoryItem";
