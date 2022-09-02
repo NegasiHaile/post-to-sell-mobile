@@ -78,9 +78,6 @@ const Signup = ({ navigation }) => {
       setIsLoading(true);
       try {
         const res = await api_Signup(signupCredentials);
-        console.warn(res.data);
-        alert("Login succeed!");
-        setIsLoading(false);
         dispatch(_setProfile(res.data));
         navigation.navigate("Home");
       } catch (error) {
