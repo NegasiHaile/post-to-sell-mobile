@@ -1,4 +1,11 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+// Redux Actions
+import { _setProfile } from "../Redux/Actions";
+
+// Utility functions
+import { validEmail } from "../Utils/Validation/InputValueValidations";
 
 // Dev components
 import { ContentContainer } from "../Components/Containers";
@@ -19,6 +26,7 @@ import {
 
 // Icons
 import { MaterialIcons } from "@expo/vector-icons";
+import { api_Signin } from "../api";
 
 const initialSigninState = {
   email: "",
@@ -26,18 +34,38 @@ const initialSigninState = {
 };
 
 const Signin = ({ navigation }) => {
+  const dispatch = useDispatch();
   // useStates
   const [showPassword, setShowPassword] = useState(false);
   const [signinCredentials, setSigninCredentials] =
     useState(initialSigninState);
   const [isLoading, setIsLoading] = useState(false);
+  const [inputErrors, setInputErrors] = useState({});
+
+  // Validating signup inputs
+  const validateInputs = () => {
+    const errors = {};
+    !validEmail(signinCredentials.email) ? (errors.email = false) : "";
+    signinCredentials.password === "" ? (errors.password = false) : "";
+    setInputErrors(errors);
+    return JSON.stringify(errors) === "{}";
+  };
 
   // On sumbmit -> login
-  const onSubmitSignin = () => {
-    try {
+  const onSubmitSignin = async () => {
+    setInputErrors({});
+    const validForm = validateInputs();
+    if (validForm) {
       setIsLoading(true);
-      alert("Login succeed!");
-    } catch (error) {}
+      try {
+        const res = await api_Signin(signinCredentials);
+        dispatch(_setProfile(res.data));
+        navigation.navigate("Products");
+      } catch (error) {
+        setIsLoading(false);
+        alert(error.response.data.msg);
+      }
+    }
   };
 
   return (
@@ -68,7 +96,7 @@ const Signin = ({ navigation }) => {
         </Heading>
 
         <VStack space={2} mt="5">
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={"email" in inputErrors}>
             <FormControl.Label>Email ID</FormControl.Label>
             <Input
               type="email"
@@ -87,8 +115,13 @@ const Signin = ({ navigation }) => {
                 />
               }
             />
+            {"email" in inputErrors && (
+              <FormControl.ErrorMessage mt={0}>
+                Please provide a valid email!
+              </FormControl.ErrorMessage>
+            )}
           </FormControl>
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={"password" in inputErrors}>
             <FormControl.Label>Password</FormControl.Label>
             <Input
               type={showPassword ? "text" : "password"}
@@ -112,6 +145,11 @@ const Signin = ({ navigation }) => {
                 />
               }
             />
+            {"password" in inputErrors && (
+              <FormControl.ErrorMessage mt={0}>
+                Please provide your password!
+              </FormControl.ErrorMessage>
+            )}
             <Link
               _text={{
                 fontSize: "xs",
