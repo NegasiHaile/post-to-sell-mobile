@@ -156,7 +156,6 @@ const ProductsFilter = () => {
             as={<MaterialIcons />}
             name="close"
             size="lg"
-            bg="primary.50"
             borderRadius="50"
             ml={1}
             onPress={() => setShowFilter((prev) => !prev)}
