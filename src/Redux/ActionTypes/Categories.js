@@ -1,3 +1,3 @@
 export const categoryActionTypes = {
-  SET_CATEGORIES: "SET_PROFILE",
+  SET_CATEGORIES: "SET_CATEGORIES",
 };
